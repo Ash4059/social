@@ -2,11 +2,15 @@ import { useState } from 'react';
 import styles from '../styles/login.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { login as userLogin } from '../api';
+import { useAuth } from '../hooks';
 
 const Login = () =>{
     const [email,setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loggingIn, setLoggingIn] = useState(false);
+    const auth = useAuth();
+    console.log(auth);
 
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -18,6 +22,22 @@ const Login = () =>{
                 position: toast.POSITION.TOP_CENTER
             });
         }
+
+        const response = auth.login(email, password)
+
+        if(response.success){
+            toast.success('Login successfull!',{
+                position: toast.POSITION.TOP_CENTER
+            });
+        }
+        else{
+            toast.error(response.message, {
+                position: toast.POSITION.TOP_CENTER
+            });
+        }
+
+        setLoggingIn(false);
+
     };
 
     return (
