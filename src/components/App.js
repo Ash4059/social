@@ -3,6 +3,9 @@ import { getPosts } from '../api/index';
 import Home from '../pages/Home';
 import Loader from "./Loader";
 import Navbar from "./Navbar";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Login from "../pages/Login";
+import Error from "../pages/Error";
 
 function App() {
 
@@ -33,8 +36,14 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
-      <Home post = {post} />
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element = {<Home post = {post} />} />
+          <Route path="/login" element = {<Login />} />
+          <Route path="*" element = {<Error />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

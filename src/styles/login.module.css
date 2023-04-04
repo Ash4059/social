@@ -1,0 +1,53 @@
+.loginSignupHeader{
+    font-weight: 600;
+    font-size: 30px;
+    color: #362849;
+}
+
+.loginForm{
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    margin: 50px auto;
+    border-radius: 6px;
+    box-shadow: #00000029 0px 1px 4px;
+}
+
+.field{
+    width: 100%;
+}
+
+.field input{
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 6px;
+    width: 100%;
+    height: 40px;
+    margin-top: 20px;
+    padding: 5px;
+    font-size: 15px;
+}
+
+.field input:focus{
+    outline: none;
+}
+
+.field button{
+    width: 100%;
+    margin-top: 20px;
+    background-color: #362849;
+    border-radius: 2px;
+    color: #fff;
+    font-size: 20px;
+    padding: 9px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.field button:disabled{
+    cursor: not-allowed;
+}
