@@ -4,9 +4,37 @@ import Comments from '../static/gif/comment.png';
 import styles from '../styles/home.module.css';
 import Proptypes from 'prop-types';
 import Comment from '../components/Comment';
+import { useEffect, useState } from 'react';
+import { getPosts } from '../api';
+import Loader from '../components/Loader';
 
 const Home = (props) => {
-    const posts = props.post;
+    const [posts,setPost] = useState(props.post);
+    const [loading, setLoader] = useState(true);
+
+    useEffect( () => {
+
+        const fetchPosts = async () =>{
+          const response = await getPosts();
+          if(response.success){
+            setPost(response.data.posts);
+            setLoader(false);
+          }
+        }
+    
+        fetchPosts();
+    
+      },[]);
+
+
+    if(loading){
+    return (
+        <>
+        <Loader />
+        </>
+    );
+    }
+
     return (
         <div className="posts-list">
             {
