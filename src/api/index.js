@@ -27,7 +27,7 @@ const customFetch = async (url, {body, ...customConfig}) => {
     }
 
     try {
-        
+
         const response = await fetch(url,config);
         const data = await response.json();
 
@@ -41,7 +41,6 @@ const customFetch = async (url, {body, ...customConfig}) => {
         throw new Error(data.message)
 
     } catch (error) {
-        console.error('error');
         return{
             message : error.message,
             success : false

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styles from '../styles/login.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { login as userLogin } from '../api';
 import { useAuth } from '../hooks';
 
 const Login = () =>{
@@ -10,9 +9,9 @@ const Login = () =>{
     const [password, setPassword] = useState('');
     const [loggingIn, setLoggingIn] = useState(false);
     const auth = useAuth();
-    console.log(auth);
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async (e) =>{
+
         e.preventDefault();
 
         setLoggingIn(true);
@@ -23,7 +22,7 @@ const Login = () =>{
             });
         }
 
-        const response = auth.login(email, password)
+        const response = await auth.login(email, password)
 
         if(response.success){
             toast.success('Login successfull!',{
