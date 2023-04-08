@@ -5,7 +5,8 @@ const initialState = {
     user : null,
     login : () => {},
     logout : () => {},
-    loading : true
+    loading : true,
+    signup : () => {}
 };
 
 export const AuthContext = createContext(initialState);

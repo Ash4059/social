@@ -20,24 +20,18 @@ const Navbar = () => {
 
       <div className={styles.rightNav}>
         {
-          (
-            () => {
-              if(auth.user){
-                return (
-                  <div className={styles.user}>
-                    <Link to="/user">
-                      <img
-                        src={Profile}
-                        alt=""
-                        className={styles.userDp}
-                      />
-                    </Link>
-                    <span>{auth.user.name}</span>
-                  </div>
-                );
-              }
-            }
-          ) 
+          auth.user ? (
+            <div className={styles.user}>
+              <Link to="/user">
+                <img
+                  src={Profile}
+                  alt=""
+                  className={styles.userDp}
+                />
+              </Link>
+              <span>{auth.user.name}</span>
+            </div>
+          ) : (<></>)
         }
 
         <div className={styles.navLinks}>
@@ -53,7 +47,7 @@ const Navbar = () => {
                     <Link to="/login">Log in</Link>
                   </li>
                   <li>
-                    <Link to="/register">Register</Link>
+                    <Link to="/signup">Sign Up</Link>
                   </li>
                 </>
               )

@@ -3,12 +3,14 @@ import styles from '../styles/login.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../hooks';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () =>{
     const [email,setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loggingIn, setLoggingIn] = useState(false);
     const auth = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) =>{
 
@@ -28,6 +30,7 @@ const Login = () =>{
             toast.success('Login successfull!',{
                 position: toast.POSITION.TOP_CENTER
             });
+            navigate('/');
         }
         else{
             toast.error(response.message, {

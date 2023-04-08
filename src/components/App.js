@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import Error from "../pages/Error";
 import { useAuth } from '../hooks';
 import Loader from './Loader';
+import Signup from '../pages/Signup';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element = {<Home post = {[]} />} />
           <Route path="/login" element = {<Login />} />
+          <Route path='/signup' element = {<Signup />} />
           <Route path="*" element = {<Error />} />
         </Routes>
       </Router>

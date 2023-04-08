@@ -7,7 +7,7 @@ const customFetch = async (url, {body, ...customConfig}) => {
     const token = window.localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
     
     const headers = {
-        'content-type' : 'application/x-www-form-url-encoded'
+        'content-type' : 'application/x-www-form-urlencoded'
     }
     
     if(token){
@@ -60,5 +60,12 @@ export const login = (email,password) => {
     return customFetch(API_URLS.login(), {
         method : 'POST',
         body : {email, password}
+    });
+}
+
+export const register = async (name,email,password,confirmPassword) => {
+    return customFetch(API_URLS.signup(),{
+        method : 'POST',
+        body: { email, name, password, confirm_password: confirmPassword }
     });
 }
