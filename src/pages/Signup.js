@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import { useAuth } from "../hooks";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import styles from '../styles/login.module.css';
 
 const Signup = () => {
@@ -54,6 +54,10 @@ const Signup = () => {
         }
 
         setSigningUp(false);
+    }
+
+    if(auth.user){
+        return <Navigate to="/" />;
     }
 
     return (

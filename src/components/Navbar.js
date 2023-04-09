@@ -22,7 +22,7 @@ const Navbar = () => {
         {
           auth.user ? (
             <div className={styles.user}>
-              <Link to="/user">
+              <Link to="/settings">
                 <img
                   src={Profile}
                   alt=""
@@ -39,7 +39,7 @@ const Navbar = () => {
             {
               auth.user ? (
                 <li>
-                  <Link onClick={auth.logout} to="/logout">Log out</Link>
+                  <Link onClick={auth.logout}>Log out</Link>
                 </li>
               ) : (
                 <>
