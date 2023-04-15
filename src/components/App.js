@@ -7,15 +7,17 @@ import { useAuth } from '../hooks';
 import Loader from './Loader';
 import Signup from '../pages/Signup';
 import Settings from '../pages/Settings';
+import UserProfile from '../pages/userProfile';
 
 const PrivateRoute = ({children, ...rest}) =>{
   const auth = useAuth();
-  return auth.user ? <Settings /> : <Navigate to='/login' />;
+  return auth.user ? children : <Navigate to='/login' />;
 }
 
 function App() {
 
   const auth = useAuth();
+  //console.log(auth);
 
   if(auth.loading){
     return (
@@ -31,7 +33,16 @@ function App() {
           <Route path="/" element = {<Home post = {[]} />} />
           <Route path="/login" element = {<Login />} />
           <Route path='/signup' element = {<Signup />} />
-          <Route path='/settings' element = {<PrivateRoute />} />
+          <Route path='/settings' element = {
+          <PrivateRoute>
+            <Settings />
+          </PrivateRoute>
+          } />
+          <Route path='/user/:userId' element = {
+            <PrivateRoute>
+              <UserProfile />
+            </PrivateRoute>
+          } />
           <Route path="*" element = {<Error />} />
         </Routes>
       </Router>

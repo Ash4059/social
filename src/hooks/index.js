@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-import { register, login as userLogin, editProfile } from "../api";
+import { register, login as userLogin, editProfile, fetchUserFriends } from "../api";
 import { getItemFromLocalStorage, removeItemFromLocalStorage, setItemInLocalStorage } from "../utils";
 import { LOCAL_STORAGE_TOKEN_KEY } from '../utils/constant';
 import jwtDecode from "jwt-decode";
@@ -14,15 +14,29 @@ export const useProviderAuth = () => {
     const [loading,setLoading] = useState(true);
 
     useEffect(() => {
-        const userToken = getItemFromLocalStorage(LOCAL_STORAGE_TOKEN_KEY);
+        const getUser = async () => {
+            const userToken = getItemFromLocalStorage(LOCAL_STORAGE_TOKEN_KEY);
 
-        if(userToken){
-            const user = jwtDecode(userToken);
+            if(userToken){
+                const user = jwtDecode(userToken);
+                const response = await fetchUserFriends();
+                let friends = [];
 
-            setUser(user);
-        }
+                if(response.success){
+                    friends = response.data.friends;
+                }
 
-        setLoading(false);
+                setUser({
+                    ...user,
+                    friends
+                });
+
+            }
+
+            setLoading(false);
+        }   
+
+        getUser();
 
     }, []);
 
@@ -92,13 +106,30 @@ export const useProviderAuth = () => {
         }
     }
 
+    const updateUserFriends = (addFriends, friend) => {
+        if(addFriends){
+            setUser({
+                ...user,
+                friends : [...user.friends, friend]
+            });
+            return;
+        }
+        else{
+            setUser({
+                ...user,
+                friends : user.friends.filter(f => f.to_user._id !== friend.to_user._id)
+            });
+        }
+    }
+
     return {
         user,
         loading,
         login,
         logout,
         signup,
-        udpateUser
+        udpateUser,
+        updateUserFriends
     }
 
 };
