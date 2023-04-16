@@ -31,7 +31,6 @@ const UserProfile = () =>{
         setRequestInProgress(true);
 
         const response = await removeFriends(userId);
-        console.log(response);
         if(response.success){
             const friendship = auth.user.friends.filter(friend => friend.to_user._id === userId);
             auth.updateUserFriends(false,friendship[0]);

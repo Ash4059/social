@@ -8,10 +8,13 @@ import { useEffect, useState } from 'react';
 import { getPosts } from '../api';
 import Loader from '../components/Loader';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks';
+import FriendList from '../components/FriendList';
 
 const Home = (props) => {
     const [posts,setPost] = useState(props.post);
     const [loading, setLoader] = useState(true);
+    const auth = useAuth();
 
     useEffect( () => {
 
@@ -37,55 +40,60 @@ const Home = (props) => {
     }
 
     return (
-        <div className="posts-list">
-            {
-                posts.map((post)=> (
-                    <div className={styles.postWrapper} key={`post-${post._id}`}>
-                        <div className={styles.postHeader}>
-                            <div className={styles.postAvatar}>
-                                <img
-                                    src={Profile}
-                                    alt="user-pic"
-                                />
-                                <div>
-                                    <Link to={`/user/${post.user._id}`} state={{user : post.user}} className={styles.postAuthor}>{post.user.name}</Link>
-                                    <span className={styles.postTime}>A minute ago</span>
-                                </div>
-                            </div>
-                            <div className={styles.postContent}>{post.content}</div>
-
-                            <div className={styles.postContentAction} style={{padding : 8}}>
-                                <div className={styles.postLike}>
-                                    <img 
-                                        src={Like}
-                                        alt="like-icon"
-                                    />
-                                    <span>{post.likes.length}</span>
-                                </div>
-                                <div className={styles.postCommentsIcon}>
+        <div className={styles.home}>
+            <div className={styles.postsList}>
+                {
+                    posts.map((post)=> (
+                        <div className={styles.postWrapper} key={`post-${post._id}`}>
+                            <div className={styles.postHeader}>
+                                <div className={styles.postAvatar}>
                                     <img
-                                        src={Comments}
-                                        alt='comments-icon'
+                                        src={Profile}
+                                        alt="user-pic"
                                     />
-                                    <span>{post.comments.length}</span>
-                                </div>
-                            </div>
-
-                            <div className={styles.postAction}>
-                                <div>
-                                    <div className={styles.postCommentBox} >
-                                        <input placeholder="Start typing a comment" />
+                                    <div>
+                                        <Link to={`/user/${post.user._id}`} state={{user : post.user}} className={styles.postAuthor}>{post.user.name}</Link>
+                                        <span className={styles.postTime}>A minute ago</span>
                                     </div>
-                                    {
-                                        post.comments.map((comment)=>(
-                                            <Comment comment = {comment} key={comment._id} />
-                                        ))
-                                    }
+                                </div>
+                                <div className={styles.postContent}>{post.content}</div>
+
+                                <div className={styles.postContentAction} style={{padding : 8}}>
+                                    <div className={styles.postLike}>
+                                        <img 
+                                            src={Like}
+                                            alt="like-icon"
+                                        />
+                                        <span>{post.likes.length}</span>
+                                    </div>
+                                    <div className={styles.postCommentsIcon}>
+                                        <img
+                                            src={Comments}
+                                            alt='comments-icon'
+                                        />
+                                        <span>{post.comments.length}</span>
+                                    </div>
+                                </div>
+
+                                <div className={styles.postAction}>
+                                    <div>
+                                        <div className={styles.postCommentBox} >
+                                            <input placeholder="Start typing a comment" />
+                                        </div>
+                                        {
+                                            post.comments.map((comment)=>(
+                                                <Comment comment = {comment} key={comment._id} />
+                                            ))
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                ))
+                    ))
+                }
+            </div>
+            {
+                auth.user && <FriendList />
             }
         </div>
     )
