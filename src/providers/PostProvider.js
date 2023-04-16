@@ -5,7 +5,8 @@ import { useProviderPosts } from "../hooks";
 const initialState = {
     post : [],
     loading : true,
-    addPostToState : () => {}
+    addPostToState : () => {},
+    addComment : () => {}
 }
 
 export const PostContext = createContext(initialState);
