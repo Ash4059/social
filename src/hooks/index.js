@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
-import { register, login as userLogin, editProfile, fetchUserFriends } from "../api";
+import { register, login as userLogin, editProfile, fetchUserFriends, getPosts } from "../api";
 import { getItemFromLocalStorage, removeItemFromLocalStorage, setItemInLocalStorage } from "../utils";
 import { LOCAL_STORAGE_TOKEN_KEY } from '../utils/constant';
 import jwtDecode from "jwt-decode";
+import { PostContext } from "../providers/PostProvider";
 
 export const useAuth = () =>{
     return useContext(AuthContext)
@@ -44,8 +45,8 @@ export const useProviderAuth = () => {
         const response = await userLogin(email,password);
 
         if(response.success){
-            setItemInLocalStorage(LOCAL_STORAGE_TOKEN_KEY,response.data.token ? response.data.token : null);
-            
+             setItemInLocalStorage(LOCAL_STORAGE_TOKEN_KEY,response.data.token ? response.data.token : null);
+
             const friendResponse = await fetchUserFriends();
             let friends = [];
 
@@ -53,10 +54,10 @@ export const useProviderAuth = () => {
                 friends = friendResponse.data.friends;
             }
 
-            setUser({
-                ...response.data.user,
+             setUser({
+                 ...response.data.user,
                 friends
-            });
+             });
 
             return {
                 success : true,
@@ -73,8 +74,8 @@ export const useProviderAuth = () => {
     };
 
     const logout = () =>{
-        setUser(null);
         removeItemFromLocalStorage(LOCAL_STORAGE_TOKEN_KEY);
+        setUser(null);
     };
 
     const signup = async (name,email,password,confirmPassword) => {
@@ -145,3 +146,37 @@ export const useProviderAuth = () => {
     }
 
 };
+
+export const usePosts = () => {
+    return useContext(PostContext);
+}
+
+export const useProviderPosts = () => {
+    const [posts,setPosts] = useState([]);
+    const [loading,setLoading] = useState(true);
+
+    useEffect( () => {
+
+        const fetchPosts = async () =>{
+          const response = await getPosts();
+          if(response.success){
+            setPosts(response.data.posts);
+            setLoading(false);
+          }
+        }
+    
+        fetchPosts();
+    
+      },[]);
+
+    const addPostToState = (post) => {
+        const newPosts = [post, ...posts];
+        setPosts(newPosts);
+    };
+
+    return {
+        post : posts,
+        loading,
+        addPostToState
+    };
+}

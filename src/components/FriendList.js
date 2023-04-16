@@ -7,7 +7,6 @@ const FriendList = () => {
 
     const auth = useAuth();
     const {friends} = auth.user ? auth.user : [];
-    console.log(friends);
     return (
         <div className={styles.friendList}>
             <div className={styles.header}>

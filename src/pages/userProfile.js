@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Profile from '../static/gif/man.png';
 import styles from '../styles/settings.module.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -91,6 +91,10 @@ const UserProfile = () =>{
 
     if(loading){
         return <Loader />
+    }
+
+    if(userId === auth.user._id){
+        return <Navigate to='/settings' />;
     }
 
     return (

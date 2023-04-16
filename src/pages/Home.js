@@ -4,35 +4,19 @@ import Comments from '../static/gif/comment.png';
 import styles from '../styles/home.module.css';
 import Proptypes from 'prop-types';
 import Comment from '../components/Comment';
-import { useEffect, useState } from 'react';
-import { getPosts } from '../api';
 import Loader from '../components/Loader';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../hooks';
+import { useAuth, usePosts } from '../hooks';
 import FriendList from '../components/FriendList';
 import CreatePost from '../components/CreatePost';
 
 const Home = (props) => {
-    const [posts,setPost] = useState(props.post);
-    const [loading, setLoader] = useState(true);
     const auth = useAuth();
+    const posts = usePosts();
 
-    useEffect( () => {
+    console.log(posts.post);
 
-        const fetchPosts = async () =>{
-          const response = await getPosts();
-          if(response.success){
-            setPost(response.data.posts);
-            setLoader(false);
-          }
-        }
-    
-        fetchPosts();
-    
-      },[]);
-
-
-    if(loading){
+    if(posts.loading){
     return (
         <>
         <Loader />
@@ -45,7 +29,7 @@ const Home = (props) => {
             <div className={styles.postsList}>
                 {auth.user ? (<CreatePost />) : (<></>)}
                 {
-                    posts.map((post)=> (
+                    posts.post?.map((post)=> (
                         <div className={styles.postWrapper} key={`post-${post._id}`}>
                             <div className={styles.postHeader}>
                                 <div className={styles.postAvatar}>

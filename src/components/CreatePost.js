@@ -2,9 +2,11 @@ import { useState } from 'react';
 import styles from '../styles/home.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { addPost } from '../api';
+import { usePosts } from '../hooks';
 
 const CreatePost = () => {
 
+    const posts = usePosts();
     const [post, setPost] = useState('');
     const [addingPost, setAddingPost] = useState(false);
 
@@ -20,6 +22,7 @@ const CreatePost = () => {
         else{
             const response = await addPost(post);
             if(response.success){
+                posts.addPostToState(response.data.post);
                 toast.success('Post created successfully...',{
                     position : toast.POSITION.TOP_CENTER
                 })
@@ -32,7 +35,6 @@ const CreatePost = () => {
         }
         setPost("");
         setAddingPost(false);
-
     }
 
     return (
