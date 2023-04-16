@@ -100,3 +100,12 @@ export const removeFriends = async (userId) => {
         method : 'POST'
     })
 }
+
+export const addPost = async (content) => {
+    return await customFetch(API_URLS.createPost(content),{
+        method : 'POST',
+        body : {
+            content
+        }
+    })
+}

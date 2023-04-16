@@ -17,7 +17,6 @@ const PrivateRoute = ({children, ...rest}) =>{
 function App() {
 
   const auth = useAuth();
-  //console.log(auth);
 
   if(auth.loading){
     return (

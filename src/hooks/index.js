@@ -44,8 +44,20 @@ export const useProviderAuth = () => {
         const response = await userLogin(email,password);
 
         if(response.success){
-            setUser(response.data.user);
             setItemInLocalStorage(LOCAL_STORAGE_TOKEN_KEY,response.data.token ? response.data.token : null);
+            
+            const friendResponse = await fetchUserFriends();
+            let friends = [];
+
+            if(friendResponse.success){
+                friends = friendResponse.data.friends;
+            }
+
+            setUser({
+                ...response.data.user,
+                friends
+            });
+
             return {
                 success : true,
                 data : response.data
@@ -117,7 +129,7 @@ export const useProviderAuth = () => {
         else{
             setUser({
                 ...user,
-                friends : user.friends.filter(f => f.to_user._id !== friend.to_user._id)
+                friends : user.friends.filter(f => f.to_user._id !== friend[0].to_user._id)
             });
         }
     }

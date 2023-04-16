@@ -167,6 +167,7 @@
     display: flex;
     width: 80%;
     margin: 0px auto;
+    justify-content: space-around;
 }
 
 .home .posts-list {
@@ -176,7 +177,6 @@
 .friendList {
     background-color: #fff;
     margin-left: 50px;
-    flex-grow: 0.2;
     height: 50vh;
     box-sizing: border-box;
     margin-top: 20px;
@@ -199,7 +199,9 @@
 .noFriends {
     display: flex;
     justify-content: center;
-    margin: 20px 0px;
+    font-weight: 600;
+    font-variant: small-caps;
+    font-size: 24px;
 }
 
 .friendsItem {
@@ -226,3 +228,45 @@
 .postsList{
     flex-grow: 0.8;
 }
+
+/* Create Post */
+.createPost {
+    background: white;
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
+  .createPost > div {
+    padding: 10px;
+    border-top: 1px solid #d0d0d0;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .createPost textarea {
+    height: 90px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 15px;
+    border: none;
+    resize: none;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+  }
+  .addPostBtn {
+    width: 112px;
+    height: 42px;
+    left: 111.5px;
+    top: 0px;
+    background: #362849;
+    border-radius: 3px;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  .addPostBtn:focus,
+  .createPost textarea:focus {
+    outline: none;
+  }
+  

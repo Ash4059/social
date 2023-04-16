@@ -10,6 +10,7 @@ import Loader from '../components/Loader';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks';
 import FriendList from '../components/FriendList';
+import CreatePost from '../components/CreatePost';
 
 const Home = (props) => {
     const [posts,setPost] = useState(props.post);
@@ -42,6 +43,7 @@ const Home = (props) => {
     return (
         <div className={styles.home}>
             <div className={styles.postsList}>
+                {auth.user ? (<CreatePost />) : (<></>)}
                 {
                     posts.map((post)=> (
                         <div className={styles.postWrapper} key={`post-${post._id}`}>
@@ -93,7 +95,7 @@ const Home = (props) => {
                 }
             </div>
             {
-                auth.user && <FriendList />
+                (auth.user) ? <FriendList /> : <></>
             }
         </div>
     )

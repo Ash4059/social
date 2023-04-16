@@ -7,23 +7,23 @@ const FriendList = () => {
 
     const auth = useAuth();
     const {friends} = auth.user ? auth.user : [];
-    
+    console.log(friends);
     return (
         <div className={styles.friendList}>
             <div className={styles.header}>
                 {
-                    friends && friends.Length === 0 ? (
+                    friends && friends.length === 0 ? (
                         <div className={styles.noFriends}>
                             No friends found!
                         </div>
                     ) : (
-                        <div>
+                        <div className={styles.noFriends}>
                             Friends...
                         </div>
                     )
                 }
             </div>
-            <div style={{margin : '20px'}}>
+            <div style={{height : 'calc(100% - 73px)', overflowY : 'auto', overflowX : 'hidden'}}>
                 {
                     friends && friends.map(friend => 
                             <div key={`friend-${friend._id}`}>
