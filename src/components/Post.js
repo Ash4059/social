@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Comment from './Comment';
 import { useState } from 'react';
 import { usePosts } from '../hooks';
-import { createComment } from '../api';
+import { createComment, toggleLike } from '../api';
 import { toast } from 'react-toastify';
 
 export const Post = ({post}) => {
@@ -43,6 +43,26 @@ export const Post = ({post}) => {
         }
     }
 
+    const handlePostLikeClick = async () => {
+        const response = await toggleLike(post._id,'Post');
+        if(response.success){
+            let strMessage = "";
+            if(response.data.deleted){
+                strMessage = 'Like removed successfully...';
+            }
+            else{
+                strMessage = 'Like added successfully...';
+            }
+            toast.success(strMessage,{
+                position : toast.POSITION.TOP_CENTER
+            });
+        }else{
+            toast.error(response.message, {
+                position : toast.POSITION.TOP_CENTER
+            })
+        }
+    }
+
     return (
         <div className={styles.postWrapper}>
             <div className={styles.postHeader}>
@@ -60,10 +80,12 @@ export const Post = ({post}) => {
 
                 <div className={styles.postContentAction} style={{padding : 8}}>
                     <div className={styles.postLike}>
-                        <img 
-                            src={Like}
-                            alt="like-icon"
-                        />
+                        <button onClick={handlePostLikeClick} style={{border : 'none', backgroundColor : 'transparent'}}>
+                            <img 
+                                src={Like}
+                                alt="like-icon"
+                            />
+                        </button>
                         <span>{post.likes.length}</span>
                     </div>
                     <div className={styles.postCommentsIcon}>
